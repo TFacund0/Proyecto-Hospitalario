@@ -113,3 +113,235 @@ El sistema **no abarcará** los siguientes aspectos:
 - Integración con sistemas de historia clínica electrónica a nivel regional o nacional.  
 - Implementación de módulos de **seguridad física** ni de vigilancia hospitalaria.  
 - Gestión de **cirugías complejas, emergencias o planificación avanzada** de recursos hospitalarios.  
+
+
+## CAPÍTULO II – MARCO CONCEPTUAL O REFERENCIAL
+
+### 2.1. Introducción al Marco Conceptual
+
+El presente capítulo reúne los fundamentos teóricos necesarios para comprender el diseño, implementación y posterior análisis del Sistema Hospitalario desarrollado. El marco conceptual permite contextualizar el proyecto dentro del campo de los Sistemas de Gestión de Bases de Datos (SGBD), aportando definiciones y nociones que sustentan las decisiones de modelado, normalización, seguridad, optimización y manejo de información clínica.
+
+Este conjunto de conceptos ofrece la base para interpretar el modelo de datos utilizado, así como los temas técnicos que se implementan en la segunda etapa del trabajo: procedimientos almacenados, funciones, índices, transacciones y manejo de datos semiestructurados (JSON).
+
+### 2.2. Sistemas de Gestión de Bases de Datos (DBMS)
+
+Un Sistema de Gestión de Bases de Datos (SGBD) es un software encargado de administrar, almacenar, recuperar y proteger los datos de forma eficiente. En el contexto hospitalario, donde la información es crítica y debe mantenerse íntegra, los SGBD permiten garantizar:
+
+- Integridad de los datos
+
+- Disponibilidad en tiempo real
+
+- Seguridad y control de acceso
+
+- Optimización de consultas clínicas y administrativas
+
+SQL Server fue elegido como motor de base de datos, dado su soporte robusto para:
+
+- Transacciones ACID
+
+- Procedimientos almacenados
+
+- Índices avanzados
+
+- Funciones definidas por el usuario
+
+- Manejo de datos JSON
+
+- Integridad referencial y restricciones
+
+Estas características se alinean perfectamente con las necesidades de un sistema hospitalario que requiere precisión, trazabilidad y consistencia.
+
+### 2.3. Modelo Relacional de Datos
+
+El modelo relacional, desarrollado por Codd, es la base teórica que organiza la información en tablas relacionadas mediante claves primarias y foráneas.
+
+En nuestro proyecto, el modelo relacional representa entidades reales del hospital tales como:
+
+- Paciente
+
+- Profesional
+
+- Habitación / Cama
+
+- Internación
+
+- Intervención
+
+- Procedimiento
+
+Todas ellas están documentadas en el Diccionario de Datos y se reflejan en el Diagrama Relacional del Capítulo IV del proyecto 
+
+
+#### Principios aplicados:
+
+- 1FN, 2FN y 3FN para eliminar redundancia.
+
+- Uso correcto de PK, FK, UNIQUE, CHECK.
+
+- Relaciones: 1–N (Paciente–Intervención, Habitación–Cama) y N–N (Profesión–TipoProcedimiento).
+
+El resultado es un modelo coherente con los procesos hospitalarios, garantizando integridad y consistencia de la información clínica.
+
+### 2.4. Lenguaje SQL y sus componentes
+
+Para implementar el modelo, SQL Server utiliza distintos subconjuntos del lenguaje SQL:
+
+#### DDL (Data Definition Language)
+
+Define la estructura de la base de datos:
+CREATE TABLE, ALTER TABLE, DROP TABLE.
+
+#### DML (Data Manipulation Language)
+
+Manipula los datos existentes:
+INSERT, UPDATE, DELETE, SELECT.
+
+#### TCL (Transaction Control Language)
+
+Gestiona transacciones:
+BEGIN TRAN, COMMIT, ROLLBACK.
+
+Estos lenguajes son utilizados en las implementaciones incluidas en el repositorio y en los temas técnicos asignados.
+
+### 2.5. Marco Teórico de los Temas Técnicos del Proyecto
+
+A continuación, se documentan los fundamentos conceptuales de los temas técnicos obligatorios requeridos por la cátedra.
+
+#### 2.5.1. Procedimientos y Funciones Almacenadas
+
+Los procedimientos almacenados y funciones son componentes esenciales para encapsular lógica de negocio dentro del SGBD.
+
+##### Procedimientos Almacenados
+
+- Ejecutan múltiples operaciones SQL.
+
+- Admiten parámetros de entrada y salida.
+
+- Permiten realizar operaciones CRUD.
+
+- Mejoran la seguridad y el rendimiento.
+
+Ejemplos: Insertar un paciente, registrar una internación, actualizar el estado de una cama.
+
+##### Funciones Definidas por el Usuario (UDF)
+
+- Devuelven un valor escalar o una tabla.
+
+- No pueden modificar datos.
+
+- Útiles para cálculos reutilizables (ej.: calcular edad).
+
+##### Diferencias clave
+
+###### Procedimiento
+- Devuelve valor:	Opcional
+- Usa SELECT:	No directo
+- Modifica datos:	Sí
+- Uso en FROM: No
+
+###### Función	
+- Devuelve valor: Obligatorio
+- Usa SELECT:	Sí, como expresión
+- Modifica datos:	No
+- Uso en FROM: Sí (table-valued)
+
+
+#### 2.5.2. Optimización de Consultas mediante Índices
+
+Los índices son estructuras de datos que aceleran el acceso a grandes volúmenes de información. Su correcta implementación es esencial en un hospital donde se consultan constantemente internaciones, pacientes y procedimientos.
+
+##### Tipos utilizados:
+
+- Índice Agrupado (Clustered): Organiza físicamente los datos.
+
+- Índice No Agrupado (Non-Clustered): estructura separada, ordenada por una o más columnas.
+
+##### Casos aplicados:
+
+- Búsqueda por DNI en paciente.
+
+- Búsqueda por fecha de ingreso en internacion.
+
+- Consultas analíticas optimizadas mediante índices de cobertura (INCLUDE).
+
+El informe concluye que los índices reducen el tiempo de búsqueda hasta en un 88% y las lecturas lógicas hasta en un 98%, dependiendo del escenario.
+
+#### 2.5.3. Manejo de Transacciones y Transacciones Anidadas
+
+Las transacciones garantizan la consistencia del sistema, especialmente en procesos hospitalarios críticos como internaciones, intervenciones o asignación de camas.
+
+##### Propiedades ACID:
+
+- Atomicidad
+
+- Consistencia
+
+- Aislamiento
+
+- Durabilidad
+
+##### Transacciones anidadas
+
+- Permiten manejar procesos complejos paso a paso
+
+- Uso de SAVEPOINT para no perder progreso parcial
+
+- Útiles en intervenciones con múltiples procedimientos vinculados
+
+###### Ejemplo aplicado
+
+Registrar una internación y actualizar el estado de una cama dentro de la misma transacción para asegurar consistencia.
+
+#### 2.5.4. Manejo de Datos Semi-Estructurados (JSON)
+
+En hospitales, existe información variable o no estructurada:
+
+- alergias
+
+- contactos alternativos
+
+- historial de síntomas
+
+- notas clínicas
+
+SQL Server permite manejar estos datos mediante JSON sobre campos NVARCHAR(MAX).
+
+##### Funciones importantes:
+
+- JSON_VALUE
+
+- OPENJSON
+
+- JSON_MODIFY
+
+##### Optimización:
+
+El uso de columnas computadas indexadas permite:
+
+- Evitar escaneos completos de tabla
+
+- Mejorar rendimientos por encima del 90%
+
+Esto aporta flexibilidad sin alterar el modelo relacional.
+
+### 2.6. Conceptos Específicos del Dominio Hospitalario
+
+El sistema se basa en conceptos reales del ámbito clínico:
+
+- Paciente como entidad central.
+
+- Intervención como evento clínico principal.
+
+- Procedimientos registrados con profesional y tipo.
+
+- Internación con habitación y cama.
+
+- Profesionales y profesiones asociadas a especialidades médicas.
+
+Estos conceptos se encuentran desarrollados formalmente en el Diccionario de Datos del proyecto
+
+### 2.7. Conclusión del Marco Conceptual
+
+El conjunto de conceptos presentados en este capítulo proporciona el fundamento teórico que sustenta el diseño y desarrollo del Sistema Hospitalario. Desde los principios del modelo relacional hasta técnicas avanzadas como índices, transacciones y manejo de datos semiestructurados, cada uno de estos elementos resulta esencial para garantizar un sistema eficiente, sólido y alineado con las necesidades reales del entorno hospitalario.
+
+Este marco conceptual servirá como referencia para comprender los resultados expuestos en el Capítulo IV y las decisiones técnicas adoptadas durante todo el proyecto.
