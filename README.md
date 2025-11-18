@@ -345,3 +345,11 @@ Estos conceptos se encuentran desarrollados formalmente en el Diccionario de Dat
 El conjunto de conceptos presentados en este capítulo proporciona el fundamento teórico que sustenta el diseño y desarrollo del Sistema Hospitalario. Desde los principios del modelo relacional hasta técnicas avanzadas como índices, transacciones y manejo de datos semiestructurados, cada uno de estos elementos resulta esencial para garantizar un sistema eficiente, sólido y alineado con las necesidades reales del entorno hospitalario.
 
 Este marco conceptual servirá como referencia para comprender los resultados expuestos en el Capítulo IV y las decisiones técnicas adoptadas durante todo el proyecto.
+
+## CAPÍTULO III – METODOLOGIA DE TRABAJO Y HERRAMIENTAS
+
+El desarrollo del proyecto se llevó a cabo bajo una metodología de trabajo colaborativa, donde se asignó un tema técnico específico (procedimiento, función, índice, transacción o JSON) a cada integrante del grupo para garantizar la profundidad y aplicación de todos los contenidos obligatorios de la cátedra. Como herramientas tecnológicas, se utilizó GitHub para la gestión de versiones y el trabajo en equipo sobre el código y la documentación, SQL Server Management Studio (SSMS) como entorno principal para el diseño e implementación de la base de datos, y Discord para mantener una comunicación fluida y constante entre los miembros del equipo.
+
+## CAPÍTULO IV - DESARROLLO DE TEMAS
+
+Toda la implementación de los temas técnicos asignados y la definición de la estructura de la base de datos se encuentran disponibles en los archivos SQL y DOCX/PDF correspondientes dentro de la carpeta scripts del repositorio del proyecto.
