@@ -95,7 +95,6 @@ El **Sistema Hospitalario Integral** cubrirá los siguientes aspectos:
 - **Gestión de Internaciones**: asignación de pacientes a habitaciones, con fechas de ingreso y egreso.  
 - **Gestión de Consultas Médicas**: registro de motivos, observaciones, recomendaciones y médico responsable.  
 - **Gestión de Procedimientos**: documentación de procedimientos médicos aplicados.  
-- **Gestión de Medicación**: administración de fármacos con dosis, turnos y personal encargado.  
 - **Gestión de Traslados**: registro de movimientos de pacientes entre habitaciones.  
 - **Gestión de Usuarios**: médicos, enfermeros y administrativos, con control de roles y accesos.  
 - **Historial Médico**: centralización de toda la información clínica de cada paciente, con trazabilidad de consultas, internaciones, traslados y medicación.  
