@@ -19,8 +19,8 @@ PRINT '---';
 -- -----------------------------------------------------------------
 PRINT '--- 1) Ejecutando SELECT... (Full Table Scan) ---';
  -- Usamos el "query hint" WITH (INDEX(0)) para forzar a SQL Server
--- a ignorar CUALQUIER índice y escanear la tabla completa. [cite: 237]
--- Este es el escenario "sin índice". [cite: 238]
+-- a ignorar CUALQUIER índice y escanear la tabla completa.
+-- Este es el escenario "sin índice".
 SELECT *
 FROM paciente WITH (INDEX(0))
 -- DNI de Tobias Acevedo 
@@ -32,7 +32,7 @@ GO
 PRINT '--- 2) Ejecutando SELECT... (Index Seek) ---';
  -- Ejecutamos la MISMA consulta, pero esta vez dejamos que el
 -- Optimizador de Consultas use el índice UNIQUE que
--- ya existe en la columna 'dni'. [cite: 240]
+-- ya existe en la columna 'dni'.
 SELECT *
 FROM paciente
 WHERE dni = 45527225;
