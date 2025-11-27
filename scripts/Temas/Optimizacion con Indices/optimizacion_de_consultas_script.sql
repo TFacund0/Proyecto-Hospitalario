@@ -1,3 +1,18 @@
+-- Indice Agrupado
+CREATE CLUSTERED INDEX IX_paciente_dni_clustered
+ON paciente (dni);
+
+-- Indice No Agrupado
+CREATE UNIQUE NONCLUSTERED INDEX IX_paciente_dni
+ON paciente (dni);
+
+-- Indice no agrupado compuesto
+CREATE NONCLUSTERED INDEX IX_paciente_apellido_nombre
+ON paciente (apellido, nombre)
+
+
+
+ 
 /*
 =====================================================================
  TEMA: OPTIMIZACIÓN DE CONSULTAS A TRAÉS DE ÍNDICES
@@ -7,6 +22,7 @@
 =====================================================================
 */
 
+ 
 -- Activamos las estadísticas para la comparación
 SET STATISTICS IO ON;
 SET STATISTICS TIME ON;
